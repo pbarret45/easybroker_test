@@ -14,5 +14,14 @@
         "twbs/bootstrap": "5.0.2",
         "guzzlehttp/guzzle": "^7.4",
         "vlucas/phpdotenv": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Src\\Property\\": "src/property",
+            "Src\\Property\\Domain\\": "src/property/domain",
+            "Src\\Property\\App\\": "src/property/app",
+            "Src\\Shared\\Http\\": "src/shared/http",
+            "Config\\": "config"
+        }
     }
 }
