@@ -7,14 +7,14 @@ use stdClass;
 
 /** Clase que maneja las llamadas del api de EasyBroker */
 class EasyBroker extends Http
-{    
+{
     /** Obtiene todas las propiedades
      * @param  int $page
      * @param  int $limit
      * @param  array $search
      * @return stdClass
      */
-    public function getAllProperties(int $page, int $limit, array $search): stdClass
+    public function getAllProperties(int $page, int $limit, array $search, string $next = ''): stdClass
     {
         $url = \http_build_query(
             array(
@@ -24,6 +24,6 @@ class EasyBroker extends Http
             ),
             ""
         );
-        return $this->getApiNew("properties?" . $url);
+        return $this->getApi("properties?" . ($next !== '' ? $next : $url));
     }
 }

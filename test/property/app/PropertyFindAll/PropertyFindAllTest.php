@@ -1,27 +1,27 @@
 <?php
 
-namespace Src\Property\App\PropertyFindAll;
+namespace Test\Property\App\PropertyFindAll;
 
+use PHPUnit\Framework\TestCase;
 use Src\Shared\Http\EasyBroker;
 use Src\Property\Domain\Property;
 use Src\Property\Domain\Operation;
 use Src\Property\Domain\Commission;
 use Src\Property\domain\Pagination;
-use stdClass;
 
 /** Busca todas las propiedades */
-class PropertyFindAll
+class PropertyFindAllTest extends TestCase
 {
-    /** Busca todas las propiedades
-     * @param  int $page
-     * @param  int $limit
-     * @param  array $search
-     * @param  string $nextPage
-     * @return stdClass
-     */
-    public function findAll(int $page = 1, int $limit = 20, array $search = [], string $nextPage = ""): stdClass
+    public function testFindAll(): void
     {
-        $easybroker = (new EasyBroker(EASYBROKER_API_URL, EASYBROKER_API_KEY))->getAllProperties($page, $limit, $search, $nextPage);
+        \define('EASYBROKER_API_URL', "https://api.stagingeb.com/v1/");
+        \define('EASYBROKER_API_KEY', "l7u502p8v46ba3ppgvj5y2aad50lb9");
+        $easybroker = (new EasyBroker(EASYBROKER_API_URL, EASYBROKER_API_KEY))->getAllProperties(1, 1, [], "");
+        $this->assertIsObject($easybroker);
+        $this->assertIsArray($easybroker->content);
+        $this->assertIsObject($easybroker->pagination);
+        $this->assertNotNull($easybroker->pagination->next_page);
+        $this->assertTrue(count($easybroker->content) > 0, "Lista de propiedades vacia.");
         $propertyList = [];
         $operationList = [];
         foreach ($easybroker->content as $property) {
@@ -57,6 +57,7 @@ class PropertyFindAll
                 $property->construction_size,
                 $operationList
             );
+            break;
         }
         $pagination = new Pagination(
             $easybroker->pagination->limit,
@@ -64,9 +65,7 @@ class PropertyFindAll
             $easybroker->pagination->total,
             $easybroker->pagination->next_page,
         );
-        $response = new stdClass();
-        $response->pagination = $pagination;
-        $response->propertyList = $propertyList;
-        return $response;
+        $this->assertInstanceOf(Pagination::class, $pagination);
+        $this->assertInstanceOf(Property::class, $propertyList[0]);
     }
 }

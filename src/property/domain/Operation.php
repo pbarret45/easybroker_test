@@ -9,7 +9,7 @@ class Operation implements \JsonSerializable
 {
     public function __construct(
         private string $type,
-        private float $amount,
+        private ?float $amount,
         private string $formatedAmount,
         private string $currency,
         private ?string $unit,

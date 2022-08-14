@@ -20,6 +20,7 @@
             "Src\\Property\\": "src/property",
             "Src\\Property\\Domain\\": "src/property/domain",
             "Src\\Property\\App\\": "src/property/app",
+            "Src\\Property\\App\\PropertyFindAll\\": "src/property/app/PropertyFindAll",
             "Src\\Shared\\Http\\": "src/shared/http",
             "Config\\": "config"
         }
